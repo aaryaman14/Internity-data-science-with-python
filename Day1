@@ -1,0 +1,154 @@
+# Day-1 Task
+
+1.Comments- # is used to create comments.
+
+2.Python I/O- Python has inbuilt functions for input and output, input() for taking inputs and print() for output.
+
+s=input(‘Enter your statement:’)
+Enter your statement: Hello, my name is Aaryaman
+print('Hello, my name is Aaryaman')- Hello, my name is Aaryaman
+
+a=12
+print('The value of a is' ,a)- The value of a is 12
+
+a=input(‘Enter a value:’)
+b=input(‘Enter a value:’)
+Enter a value: 10
+Enter a value: 20
+print('The value of x is {} and y is {}'.format(x,y))- The value of x is 10 and y is 20
+
+print('i like to {0} and {1}.format('play','dance'))- i like to play and dance
+print('i like to {1} and {0}.format('play','dance'))- i like to dance and play
+
+print(10,20,30,40, sep='*')- 10*20*30*40
+
+
+3.Operators- Python has various type of operators mainly arithmetic, assignment, comparison, logical etc. 
+
+print(10+5) - 15 - Arithmetic 
+x=10  - Assignment 
+x+=3 - Short hand operator
+x>=y - Comparison operator
+x<5 and y>10 - Logical operator
+
+
+4.Namespace- It is a form of python dictionary that has unique name for each and every object in python.
+
+v1=5                    //global namespace
+def func1():
+  v2=6                 //local namespace
+  def func2():
+v3=7              //nested local namespace
+
+
+def f()
+print('Start f()') 
+def g()
+print('Start g()') 
+print('End g()') 
+return 
+g()
+print('End f()')
+return 
+f()
+
+
+5.Some useful functions- Python has many inbuilt and user-defined function to work on. Some of them are as follows-
+
+a=’Hello my name is Aaryaman’
+a.upper()  -  HELLO MY NAME IS AARYAMAN
+
+abs(-4/3) - 1.333
+
+min(2,3,5) - 2
+
+a=[3,2,1]
+a.sorted() - 1,2,3
+
+sum(a) - 6
+
+6.Flow control statement- In python we use variety of statements for execution of the statements and checking the conditions. Some of them are-
+
+n=10
+if n%2==0:
+  print(‘n is even’)
+
+n=5
+if n%2==0:
+  print(‘n is even’)
+else:
+  print(‘n is odd’)
+
+l=[1,2,3,4,5]
+for I in range(len(l)):
+   print(l[i])
+
+m=5
+i=0
+
+while(i<m):
+  print(i)
+  i=i+1
+
+
+7.Python data types- Just like any other data type python has some data types too but we don’t need to declare them explicitly but the compiler detects the type by itself.
+
+Text type- str
+Numeric type- int, float, complex
+Sequence type- list, tuple 
+
+8.List- These are used to store multiple values in a single variable. They are ordered and can contain duplicate elements.
+
+L=[“apple”,”banana”,”lichi”]
+L1=[1,2,3,4,5]
+
+for i in range(len(L)):
+  print(L[i])
+
+for i in range(len(L1)):
+  print(L1[i])
+
+9.Tuple- These are used to store multiple values in a single variable. The values once stored in tuple are unchangeable, can have duplicated and ordered.
+
+L=(“apple”,”banana”,”lichi”)
+L1=(1,2,3,4,5)
+L2=(True, False, True)
+L3=(“apple”,30,”banana”,40,”lichi”,50)
+
+10.Dictionary- These are used to store the value in key value pair. This is ordered, changeable and does not allow duplicates.
+
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+
+print(thisdict["brand"])- Ford
+
+print(thisdict) - {'brand': 'Ford', 'model': 'Mustang', 'year': 2020}
+
+11.Strings- Strings are used in python enclosed in single or double quotes.
+
+a = "Hello"
+print(a)
+
+a = """hello my name is Aaryaman.
+I study in Thapar Institute.
+I live in Punjab."""
+print(a)
+
+
+a = "Hello, World!"
+print(a[1]) - e
+
+for x in "banana":
+  print(x) 
+b
+a
+n
+a
+n
+a
+
+a = "Hello, World!"
+print(len(a)) - 13
