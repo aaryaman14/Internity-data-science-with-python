@@ -1,0 +1,135 @@
+# Day-3 Task
+1.Functions and Modules- Functions are the blocks of code that run when we call them in main method. We pass the parameters to the function and it does the work. The various types of functions in python are user-defined, Built-in functions, Lambda functions and recursion functions.Some of the examples are-
+
+def add()
+
+a=10
+b=20
+c=a+b
+
+print( c )
+
+abs(-7) -- 7
+bin(7)  -- ‘0b111’
+
+L={1,2,4,5,6,7}
+new_l=list(filter(lambda x: (x%2==0),L))
+print(new_l) ---- 2,4,6
+
+def fact(x):
+  if x==1:
+return 1
+ else:
+   return(x*fact(x-1))
+
+Modules are the simple python files that can be imported inside the python programme. The advantages of module are that they are reusable and simple to use. We can create a sinple file with .py extension that contains various functions.
+
+def add(x,y):
+  return(x+y)
+
+def sub(x,y):
+  return(x-y)
+
+2.List Comprehension- List comprehension offers a shorter syntax when you want to create a new list based on the values of an existing list.
+
+fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
+newlist = []
+
+for x in fruits:
+  if "a" in x:
+    newlist.append(x)
+
+print(newlist)  ----- ['apple'['apple', 'banana', 'mango']
+
+This above program can be done using
+
+fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
+newlist = [x for x in fruits if "a" in x]
+
+print(newlist)  ----  ['apple', 'banana', 'mango']
+
+fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
+
+newlist = [x.upper() for x in fruits]
+
+print(newlist)  ---------- ['APPLE', 'BANANA', 'CHERRY', 'KIWI', 'MANGO']
+
+
+fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
+
+newlist = [x if x != "banana" else "orange" for x in fruits]
+
+print(newlist)  ----- ['apple', 'orange', 'cherry', 'kiwi', 'mango']
+
+
+3.Iterators- Iterator in python is an object that is used to iterate over iterable objects like lists, tuples, dicts, and sets. The iterator object is initialized using the iter() method. It uses the next() method for iteration.
+
+iterable_value = 'Geeks'
+iterable_obj = iter(iterable_value)
+ 
+while True:
+    try:
+ 
+        # Iterate by calling next
+        item = next(iterable_obj)
+        print(item)
+    except StopIteration:
+ 
+        # exception will happen when iteration will over
+        break
+
+l = ["geeks", "for", "geeks"]
+for i in l:
+print(i)
+
+OUTPUT- 
+geeks
+for
+geeks
+
+print("\nString Iteration")   
+s = "Geeks"
+for i in s :
+    print(i)
+
+OUTPUT- 
+G
+e
+e
+k
+s
+
+4.Generators- A generator-function is defined like a normal function, but whenever it needs to generate a value, it does so with the yield keyword rather than return. If the body of a def contains yield, the function automatically becomes a generator function.
+
+This is the example of generator functions-
+def simpleGeneratorFun():
+    yield 1            
+    yield 2            
+    yield 3            
+   
+# Driver code to check above generator function
+for value in simpleGeneratorFun(): 
+print(value)
+
+OUTPUT- 
+1
+2
+3
+
+This is the example of generator objects-
+def simpleGeneratorFun():
+    yield 1
+    yield 2
+    yield 3
+   
+# x is a generator object
+x = simpleGeneratorFun()
+  
+# Iterating over the generator object using next
+print(x.next()) # In Python 3, __next__()
+print(x.next())
+print(x.next())
+OUTPUT- 
+1
+2
+3
