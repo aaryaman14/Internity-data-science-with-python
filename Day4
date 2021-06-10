@@ -1,0 +1,238 @@
+# Day-4 Task
+
+
+1.Classes and objects: A class is a user-defined blueprint or prototype from which objects are created. Classes provide a means of bundling data and functionality together.
+An Object is an instance of a Class.
+
+self: Class methods must have an extra first parameter in the method definition. We do not give a value for this parameter when we call the method, Python provides it.
+
+init: It is same as constructors.Gets invoked when object is created.
+
+Examples: 
+A)
+class Dog:
+    attr1 = "mammal"
+    attr2 = "dog"
+ 
+    def fun(self):
+        print("I'm a", self.attr1)
+        print("I'm a", self.attr2)
+
+Rodger = Dog()       #---mammal
+print(Rodger.attr1)  #---I'm a mammal
+Rodger.fun()         #---I'm a dog
+
+B)
+class Person:
+   
+    def __init__(self, name):
+        self.name = name
+   
+    def say_hi(self):
+        print('Hello, my name is', self.name)
+   
+p = Person('Nikhil')
+p.say_hi()                  #-----Hello, my name is Nikhil
+
+
+
+C)
+class Dog:
+   
+    animal = 'dog'            
+   
+    def __init__(self, breed, color):
+     
+        self.breed = breed
+        self.color = color       
+
+Rodger = Dog("Pug", "brown")
+Buzo = Dog("Bulldog", "black")
+ 
+print('Rodger details:')  			    #---Rodger details:
+print('Rodger is a', Rodger.animal)	#---Rodger is a dog
+print('Breed: ', Rodger.breed)		  #---Breed: Pug
+print('Color: ', Rodger.color)			#---Color: brown
+ 
+print('\nBuzo details:')  			  #---Buzo details:
+print('Buzo is a', Buzo.animal)		#---Buzo is a dog
+print('Breed: ', Buzo.breed)			#---Breed: Bulldog	
+print('Color: ', Buzo.color)			#---Color: black
+
+ 
+print("\nAccessing class variable using class name")      #---Accessing class variable using class name
+print(Dog.animal)       		                              #---dog
+
+
+2.Closures: A Closure is a function object that remembers values in enclosing scopes even if they are not present in memory. 
+Uses: 
+1. As closures are used as callback functions, they provide some sort of data hiding. This helps us to reduce the use of global variables.
+2. When we have few functions in our code, closures prove to be an efficient way.
+
+To define a closure we need an inner function that:
+1-It should be returned by the outer function.
+2- it should capture some of the nonlocal variables of the outer function. This can be done by accessing those variables, or defining them as a nonlocal variable or having a nested closure that needs to capture them.
+
+Examples:
+A)
+def outerFunction(text):
+    text = text
+ 
+    def innerFunction():
+        print(text)
+ 
+    return innerFunction 
+ 
+if __name__ == '__main__':
+    myFunction = outerFunction('Hey!')
+    myFunction()						#---Hey!
+
+B)
+def f(x):
+def g(y):
+def h(z):
+return x * y * z
+return h
+return g
+a = 5
+b = 2
+c = 1
+f(a)(b)			#---10
+
+C)
+def f(x):
+z = 2
+return lambda y: z*x+y
+a = 5
+b = 1
+f(a)(b)			#---11
+
+
+
+Decorators: Decorators are very powerful and useful tool in Python since it allows programmers to modify the behavior of function or class. Decorators allow us to wrap another function in order to extend the behavior of the wrapped function, without permanently modifying it.
+
+Examples:
+A)
+def shout(text): 
+    return text.upper() 
+  
+def whisper(text): 
+    return text.lower() 
+  
+def greet(func): 
+       greeting = func("""Hi, I am created by a function passed as an argument.""") 
+    print (greeting) 
+  
+greet(shout) 			#---HI, I AM CREATED BY A FUNCTION PASSED AS AN ARGUMENT.
+greet(whisper) 	    #---hi, i am created by a function passed as an argument.
+
+B)
+def create_adder(x): 
+    def adder(y): 
+        return x+y 
+  
+    return adder 
+  
+add_15 = create_adder(15) 
+  
+print(add_15(10)) 		#---25
+
+
+C)
+def hello_decorator(func):
+  
+    def inner1():
+        print("Hello, this is before function execution")
+  
+        func()
+  
+        print("This is after function execution")
+          
+    return inner1
+  
+def function_to_be_used():
+    print("This is inside the function !!")
+ 
+function_to_be_used = hello_decorator(function_to_be_used)
+  
+function_to_be_used()		#---Hello, this is before function execution
+                            This is inside the function !!
+                            This is after function execution
+
+3.Descriptors: Python descriptors are created to manage the attributes of different classes which use the object as reference. In descriptors we used three different methods that are __getters__(), __setters__(), and __delete__(). If any of those methods are defined for an object, it can be termed as a descriptor.
+
+Examples:
+A)
+class Descriptor(object):
+  
+    def __init__(self, name =''):
+        self.name = name
+  
+    def __get__(self, obj, objtype):
+        return "{}is{}".format(self.name, self.name)
+  
+    def __set__(self, obj, name):
+        if isinstance(name, str):
+            self.name = name
+        else:
+            raise TypeError("Name should be string")
+          
+class GFG(object):
+    name = Descriptor()
+    
+g = GFG()
+g.name = "Python"
+print(g.name)			#---PythonisPython
+
+
+B)
+class Descriptor(object):
+  
+    def __init__(self, name =''):
+        self.name = name
+  
+    def __get__(self, obj, objtype):
+        return "{}for{}".format(self.name, self.name)
+  
+    def __set__(self, obj, name):
+        if isinstance(name, str):
+            self.name = name
+        else:
+            raise TypeError("Name should be string")
+          
+class GFG(object):
+    name = Descriptor()
+    
+g = GFG()
+g.name = "Computer"
+print(g.name)			#---ComputerforComputer
+
+
+C)Using @property
+class Alphabet: 
+    def __init__(self, value): 
+        self._value = value 
+     
+    @property
+    def value(self): 
+        print('Getting value') 
+        return self._value 
+   
+    @value.setter 
+    def value(self, value): 
+        print('Setting value to ' + value) 
+        self._value = value 
+    
+    @value.deleter 
+    def value(self): 
+        print('Deleting value') 
+        del self._value 
+ 
+x = Alphabet('Peter') 		#---Getting value
+print(x.value) 			#---Peter
+    
+x.value = 'Diesel'			#---Setting value to Diesel
+    
+del x.value 			#---Deleting value
+
+
