@@ -1,0 +1,184 @@
+# Day-5 Task
+
+1.Data handling: Managing and representing data systematically has become very important especially when the data provided is large and complex, This is when Data Handling comes into the picture. The definition of Data handling is in the title itself, that is, Handling the data in such a way that it becomes easier for people to understand and comprehend the given information. Hence, The process of collecting, Recording, and representing data in some form of graph or chart to make it easy for people to understand is called Data handling.
+
+A)Pictograph: A pictograph is the pictorial representation of any data given to us in written form. It can be said that pictograph used to be the earliest form of conversation, since way back in time, people have communicated mostly through pictures with each other since the languages were not present.
+
+B)Bar Graph:The graphical representation of any quantity, number or data in the form of bars is called a bar graph.
+Types: 
+Vertical Bar Graph
+Horizontal Bar Graph
+
+a.Vertical Bar Graph:The bars of grouped data in vertical bar graphs lie vertically.When the data categorized have long names, then Horizontal bar graphs are preferred since, in vertical bar graphs, there is not much space on the x-axis.
+
+b.Horizontal Bar Graph: The graphs that have their rectangular bars lying horizontally, which means that the frequency of the data lie on the x-axis while the categories of the data lie on the y-axis are known as Horizontal bar graphs.
+Horizontal bar graphs are preferred when the name of the categories of data are long and the minimum space on the x-axis is not sufficient.
+
+
+2.Working with files:Python too supports file handling and allows users to handle files i.e., to read, write, create, delete and move files, along with many other file handling options, to operate on files. 
+
+A)Creating a file: 
+Syntax:
+open(filename, mode)
+
+There are 6 access modes in python.
+Read Only (‘r’)
+Read and Write (‘r+’)
+Write Only (‘w’)
+Write and Read (‘w+’) 
+Append Only (‘a’)
+Append and Read (‘a+’)
+
+
+
+B)Reading from file: 
+
+read(): Returns the read bytes in form of a string. Reads n bytes, if no n specified, reads the entire file.
+readline(): Reads a line of the file and returns in form of a string.For specified n, reads at most n bytes
+readlines(): Reads all the lines and return them as each line a string element in a list.
+
+Example:
+file1 = open("myfile.txt", "w") 
+L = ["This is Delhi \n", "This is Paris \n", "This is London \n"] 
+ 
+file1.write("Hello \n")  
+file1.writelines(L) 
+file1.close()  # to change file access modes 
+    
+file1 = open("myfile.txt", "r+") 
+    
+print("Output of Read function is ") 
+print(file1.read()) 
+print() 
+    
+file1.seek(0) 
+    
+print("Output of Readline function is ") 
+print(file1.readline()) 
+print() 
+    
+file1.seek(0) 
+
+print("Output of Read(9) function is ") 
+print(file1.read(9)) 
+print() 
+    
+file1.seek(0) 
+    
+print("Output of Readline(9) function is ") 
+print(file1.readline(9)) 
+print() 
+    
+file1.seek(0) 
+    
+print("Output of Readlines function is ") 
+print(file1.readlines()) 
+print() 
+file1.close()  
+
+Output:
+Output of Read function is
+Hello
+This is Delhi
+This is Paris
+This is London
+
+Output of Readline function is
+Hello
+
+Output of Read(9) function is
+Hello
+Th
+
+Output of Readline(9) function is
+Hello
+
+Output of Readlines function is
+['Hello \n', 'This is Delhi \n', 'This is Paris \n', 'This is London \n']
+
+C)Writing to file: 
+write(): Inserts the string str1 in a single line in the text file.
+File_object.write(str1)
+writelines(): For a list of string elements, each string is inserted in the text file. Used to insert multiple strings at a single time.
+
+Example:
+file1 = open('myfile.txt', 'w') 
+L = ["This is Delhi \n", "This is Paris \n", "This is London \n"] 
+s = "Hello\n"
+file1.write(s) 
+ 
+file1.writelines(L) 
+file1.close() 
+file1 = open('myfile.txt', 'r') 
+print(file1.read()) 
+file1.close() 
+
+Output:
+Hello
+This is Delhi
+This is Paris
+This is London
+
+D)Moving file: This can be achieved using shutil.move() function from shutil module. shutil.move() method Recursively moves a file or directory (source) to another location (destination) and returns the destination.
+
+Example:
+import shutil 
+    
+source = "D:\Pycharm projects\gfg\Test\Test4.txt"
+
+destination = "D:\Pycharm projects\gfg\Test\G"
+dest = shutil.move(source, destination) 
+
+Output: File gets moved from source to destination.
+
+E)Deleting a file: os.remove() method in Python is used to remove or delete a file path. This method can not remove or delete a directory.
+
+
+3.Database Connectivity: 
+What is MYSQLdb?
+MySQLdb is an interface for connecting to a MySQL database server from Python. It implements the Python Database API v2.0 and is built on top of the MySQL C API.
+Import-Package 
+ 
+import MYSQLdb
+
+How to connect to a remote MySQL database using python?
+Before we start you should know the basics of SQL. Now let us discuss the methods used in this code: 
+connect(): This method is used for creating a connection to our database it has four arguments: 
+1.Server Name
+2.Database User Name
+3.Database Provider
+4.Database Name
+cursor(): This method creates a cursor object that is capable of executing SQL queries on the database.
+execute(): This method is used for executing SQL queries on the database. It takes a sql query( as string) as an argument.
+fetchone(): This method retrieves the next row of a query result set and returns a single sequence, or None if no more rows are available.
+close() : This method close the database connection.
+
+
+Example: 
+import MySQLdb
+ 
+def mysqlconnect():
+       try:
+        db_connection= MySQLdb.connect
+        ("Hostname","dbusername","password","dbname")
+       except:
+        print("Can't connect to database")
+        return 0
+        print("Connected")
+ 
+        cursor=db_connection.cursor()
+ 
+       cursor.execute("SELECT CURDATE();")
+ 
+    m = cursor.fetchone()
+ 
+       print("Today's Date Is ",m[0])
+ 
+        db_connection.close()
+ 
+mysqlconnect()
+
+
+Output:
+Connected
+Today's Date Is  2021-06-11
