@@ -1,0 +1,452 @@
+# Day-7 Task
+
+1.Linear algebra: 
+The Linear Algebra module of NumPy offers various methods to apply linear algebra on any numpy array.
+One can find:
+rank, determinant, trace, etc. of an array.
+eigen values of matrices
+matrix and vector products (dot, inner, outer,etc. product), matrix exponentiation
+solve linear or tensor equations
+
+Example: 
+import numpy as np
+ 
+A = np.array([[6, 1, 1],
+              [4, -2, 5],
+              [2, 8, 7]])
+
+print("Rank of A:", np.linalg.matrix_rank(A))	#---Rank of A: 3
+
+ 
+print("\nTrace of A:", np.trace(A))		#---Trace of A: 11
+
+ 
+print("\nDeterminant of A:", np.linalg.det(A))	#---Determinant of A: -306.0
+
+ 
+print("\nInverse of A:\n", np.linalg.inv(A))	#---Inverse of A:
+ 					[[ 0.17647059 -0.00326797 -0.02287582]
+ 					[ 0.05882353 -0.13071895  0.08496732]
+ 					[-0.11764706  0.1503268   0.05228758]]
+
+ 
+print("\nMatrix A raised to power 3:\n",
+           np.linalg.matrix_power(A, 3))	#---Matrix A raised to 	     power 3:
+ 					  [[336 162 228]
+ 					  [406 162 469]
+ 					  [698 702 905]]
+
+numpy.linalg.eigh(a, UPLO=’L’) : This function is used to return the eigenvalues and eigenvectors of a complex Hermitian (conjugate symmetric) or a real symmetric matrix.
+Example:
+from numpy import linalg as geek
+ 
+a = np.array([[1, -2j], [2j, 5]])
+ 
+print("Array is :",a)	#--Array is : [[ 1.+0.j,  0.-2.j],
+                [ 0.+2.j,  5.+0.j]]
+
+ 
+c, d = geek.eigh(a)
+ 
+print("Eigen value is :", c)	#---Eigen value is : [ 0.17157288,  5.82842712]
+
+print("Eigen value is :", d) 	#---Eigen value is : [[-0.92387953+0.j , -	 0.38268343+0.j ],
+       			[ 0.00000000+0.38268343j,  0.00000000-0.92387953j]]
+
+
+numpy.linalg.solve() : Solve a linear matrix equation, or system of linear scalar equations.Computes the “exact” solution, x, of the well-determined, i.e., full rank, linear matrix equation ax = b.
+Example:
+import numpy as np
+a = np.array([[1, 2], [3, 4]])
+ 
+b = np.array([8, 18])
+ 
+print(("Solution of linear equations:", 
+      np.linalg.solve(a, b)))	#---Solution of linear equations: [ 2.  3.]
+
+numpy.linalg.lstsq() : Return the least-squares solution to a linear matrix equation.Solves the equation a x = b by computing a vector x that minimizes the Euclidean 2-norm || b – a x ||^2.
+Example:
+import numpy as np
+import matplotlib.pyplot as plt
+ 
+x = np.arange(0, 9)
+A = np.array([x, np.ones(9)])
+ 
+y = [19, 20, 20.5, 21.5, 22, 23, 23, 25.5, 24]
+w = np.linalg.lstsq(A.T, y)[0] 
+line = w[0]*x + w[1] # regression line
+plt.plot(x, line, 'r-')
+plt.plot(x, y, 'o')
+plt.show()		
+
+
+numpy.linalg.tensorsolve()-Solve the tensor equation a x = b for x.
+numpy.linalg.inv()-Compute the (multiplicative) inverse of a matrix.
+numpy.linalg.pinv()-Compute the (Moore-Penrose) pseudo-inverse of a matrix.
+numpy.linalg.tensorinv()-Compute the ‘inverse’ of an N-dimensional array.
+
+2.Using NumPy arrays: 
+A)Join-
+Example:
+(a)import numpy as np
+
+arr1 = np.array([[1, 2], [3, 4]])
+
+arr2 = np.array([[5, 6], [7, 8]])
+
+arr = np.concatenate((arr1, arr2), axis=1)
+
+print(arr)		#---[[1 2 5 6] [3 4 7 8]]
+
+(b)Using stack()-
+import numpy as np
+
+arr1 = np.array([1, 2, 3])
+
+arr2 = np.array([4, 5, 6])
+
+arr = np.stack((arr1, arr2), axis=1)
+
+print(arr)		#---[[1 4]
+			     [2 5]
+			     [3 6]]
+
+Other functions:
+hstack()- to stack along rows.
+vstack()- to stack along columns.
+dstack()- to stack along height, which is the same as depth.
+
+B)Split-
+Example:
+(a)import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5, 6])
+
+newarr = np.array_split(arr, 3)
+
+print(newarr[0])	#---[1 2]
+print(newarr[1])	#---[3 4]
+print(newarr[2])	#---[5 6]
+
+(b)Split the 2-D array into three 2-D arrays along rows.
+import numpy as np
+
+arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15], [16, 17, 18]])
+
+newarr = np.array_split(arr, 3, axis=1)
+
+print(newarr)		#---[array([[ 1],
+       			[ 4],
+       			[ 7],
+       			[10],
+       			[13],
+       			[16]]), array([[ 2],
+       			[ 5],
+       			[ 8],
+       			[11],
+       			[14],
+       			[17]]), array([[ 3],
+       			[ 6],
+       			[ 9],
+       			[12],
+       			[15],
+       			[18]])]
+
+Other functions-
+hsplit(), vsplit(), dsplit().
+
+C)Searching arrays-
+Example: 
+(a)import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+
+x = np.where(arr%2 == 0)
+
+print(x)	#---(array([1, 3, 5, 7],)
+
+(b) searchsorted() which performs a binary search in the array
+import numpy as np
+
+arr = np.array([6, 7, 8, 9])
+
+x = np.searchsorted(arr, 7, side='right')
+
+print(x)	#---2
+
+(c)import numpy as np
+
+arr = np.array([1, 3, 5, 7])
+
+x = np.searchsorted(arr, [2, 4, 6])
+
+print(x)	#---[1 2 3]
+
+D)Sorting-
+Example:
+(a)import numpy as np
+
+arr = np.array(['banana', 'cherry', 'apple'])
+
+print(np.sort(arr))	#---['apple' 'banana' 'cherry']
+
+(b)import numpy as np
+
+arr = np.array([[3, 2, 4], [5, 0, 1]])
+
+print(np.sort(arr))	#---[[2 3 4]
+ [0 1 5]]
+
+
+3.Vectorization:Converting iterative statements into a vector based operation is called vectorization.
+Examples:
+(a)x = [1, 2, 3, 4]
+y = [4, 5, 6, 7]
+z = []
+
+for i, j in zip(x, y):
+  z.append(i + j)
+print(z)	#---[5, 7, 9, 11]
+
+(b)numpy.dot(vector_a, vector_b, out = None) : returns the dot product of vectors a and b. It can handle 2D arrays but considering them as matrix and will perform matrix multiplication.
+import numpy as geek
+ 
+product = geek.dot(5, 4)
+print("Dot Product of scalar values  : ", product)
+ 
+vector_a = 2 + 3j
+vector_b = 4 + 5j
+ 
+product = geek.dot(vector_a, vector_b)	#---Dot Product of scalar values  :  20
+
+print("Dot Product  : ", product)	#---Dot Product  :  (-7+22j)
+
+(c)numpy.vdot(vector_a, vector_b) : Returns the dot product of vectors a and b. If first argument is complex the complex conjugate of the first argument(this is where vdot() differs working of dot() method) is used for the calculation of the dot product. It can handle multi-dimensional arrays but working on it as a flattened array.
+import numpy as geek
+ 
+
+vector_a = 2 + 3j
+vector_b = 4 + 5j
+ 
+product = geek.vdot(vector_a, vector_b)
+print("Dot Product  : ", product)	#---Dot Product  :  (23-2j)
+
+4.Universal functions: ufuncs stands for "Universal Functions" and they are NumPy functions that operates on the ndarray object.ufuncs are used to implement vectorization in NumPy which is way faster than iterating over elements.
+They also provide broadcasting and additional methods like reduce, accumulate etc. that are very helpful for computation.
+A)Creating your ufunc- Using frompyfunc()
+Example:
+import numpy as np
+
+def myadd(x, y):
+  return x+y
+
+myadd = np.frompyfunc(myadd, 2, 1)
+
+print(myadd([1, 2, 3, 4], [5, 6, 7, 8]))	#---[6 8 10 12]
+
+B)Arithmatic operations- 
+(a)add() - sums the content of two arrays
+(b)subtract() - subtracts the values from one array with the values from another array
+(c)multiply() - multiplies the values from one array with the values from another array
+(d)divide() - divides the values from one array with the values from another array
+(e)power() - rises the values from the first array to the power of the values of the second array
+(f)remainder() - return the remainder of the values in the first array corresponding to the values in the second array
+(g)absolute() -  do the same absolute operation element-wise
+
+Example:
+import numpy as np
+
+arr1 = np.array([10, 20, 30, 40, 50, 60])
+arr2 = np.array([3, 7, 9, 8, 2, 33])
+
+newarr = np.mod(arr1, arr2)
+
+print(newarr)		#---[1 6 3 0 0 27]
+
+C)Logs- 
+Example:
+(a)import numpy as np
+
+arr = np.arange(1, 10)
+
+print(np.log2(arr)) #---Log to base 2 of 1 to 9
+
+
+(b)import numpy as np
+
+arr = np.arange(1, 10)
+
+print(np.log(arr))	#---Log to base e of 1 to 9
+
+D)Summations-summation happens over n elements using sum()
+Example:
+import numpy as np
+
+arr1 = np.array([1, 2, 3])
+arr2 = np.array([1, 2, 3])
+
+newarr = np.sum([arr1, arr2], axis=1)
+
+print(newarr)		#---[6 6]
+
+E)Product-To find the product of the elements in an array, use the prod() function.
+Example:
+import numpy as np
+
+arr1 = np.array([1, 2, 3, 4])
+arr2 = np.array([5, 6, 7, 8])
+
+newarr = np.prod([arr1, arr2], axis=1)
+
+print(newarr)		#---[24 1680]
+
+F)Differences-A discrete difference means subtracting two successive elements.
+Example:
+import numpy as np
+
+arr = np.array([10, 15, 25, 5])
+
+newarr = np.diff(arr)
+
+print(newarr)		#---[5 10 -20]
+
+G)LCM and GCD-
+Example: 
+(a)import numpy as np
+
+arr = np.array([3, 6, 9])
+
+x = np.lcm.reduce(arr)
+
+print(x)	#---18
+
+(b)import numpy as np
+
+arr = np.array([20, 8, 32, 36, 16])
+
+x = np.gcd.reduce(arr)
+
+print(x)		#---4
+
+5.Broadcasting and shape manipulation- 
+Broadcasting-The term broadcasting refers to how numpy treats arrays with different Dimension during arithmetic operations which lead to certain constraints, the smaller array is broadcast across the larger array so that they have compatible shapes. 
+Example:
+import numpy as np
+A = np.array([[11, 22, 33], [10, 20, 30]])
+print(A)		#---[[11 22 33]
+ 			     [10 20 30]]
+
+ 
+b = 4
+print(b)		#---4
+ 
+c = A + b
+Print(c)		#---[[15 26 37]
+ 			    [14 24 34]]
+
+Shape manipulation- NumPy arrays have an attribute called shape that returns a tuple with each index having the number of corresponding elements.
+Example:
+import numpy as np
+
+arr = np.array([1, 2, 3, 4], ndmin=5)
+
+print(arr)	#---[[[[[1 2 3 4]]]]]
+print('shape of array :', arr.shape)		#---shape of array : (1, 1, 1, 1, 4)
+
+Reshaping means changing the shape of an array.
+Example:
+A)1D to 3D-
+import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+
+newarr = arr.reshape(2, 3, 2)
+
+print(newarr)			#---[[[ 1  2]
+  				[ 3  4]
+  				[ 5  6]]
+
+ 				[[ 7  8]
+  				[ 9 10]
+  				[11 12]]]
+
+B)Flattening of array:
+import numpy as np
+
+arr = np.array([[1, 2, 3], [4, 5, 6]])
+
+newarr = arr.reshape(-1)
+
+print(newarr)		#---[1 2 3 4 5 6]
+
+6.Boolean masks: To select particular subsets of the data themselves.to select these values from the array, we can simply index on this Boolean array; this is known as a masking operation.
+
+Example:
+(a)import numpy as np
+
+arr = np.array([41, 42, 43, 44])
+
+filter_arr = []
+
+for element in arr:
+    if element > 42:
+    filter_arr.append(True)
+  else:
+    filter_arr.append(False)
+
+newarr = arr[filter_arr]
+
+print(filter_arr) 	#---[False, False, True, True]
+print(newarr)		#---[43 44]
+
+(a)Directly from array-
+import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5, 6, 7])
+
+filter_arr = arr % 2 == 0
+
+newarr = arr[filter_arr]
+
+print(filter_arr)	#---[False  True False  True False  True False]
+print(newarr)		#---[2 4 6]
+
+
+7.Dates and Time: 
+We can’t ‘just use strings‘ to represent dates and times, we will use strings as input to the main function we’ll be working with: np.datetime64().
+NumPy uses the following (common sense) abbreviations for units of time, note the capitalization where it occurs:
+Abbreviation	Meaning
+Y	Years
+M	Months
+W	Weeks
+D	Days
+h	Hours
+m	Minutes
+s	Seconds
+ms	Milliseconds
+us	Microseconds (since μs (the Greek letter ‘mu’) is the way we’d hand write it and ‘u’ looks closest to this in English).
+
+Example:
+A)
+import numpy as np
+
+# My Birthday: 22nd July 2000
+birthday = np.datetime64('1988-07-22')
+today = np.datetime64('2020-06-27')
+
+# Business Days passed:
+passed = np.busday_count(birthday, today)
+print('Number of Days passed since your birthday:')
+print(passed)	#---8331
+
+B)Using timedelta64-
+np.datetime64('2013-01-01') - np.datetime64('2012-01-01')
+numpy.timedelta64(366,'D')
+# Add on 15 days to June 2000
+>>> np.datetime64('2000-05') + np.timedelta64(15, 'D')
+numpy.datetime64('2000-05-16')
+# What is 5 hours after 1pm on 22nd Nov 2000?
+>>> np.datetime64('2000-11-22 13:00') + np.timedelta64(5, 'h')
+numpy.datetime64('2000-11-22T18:00')
+
+
