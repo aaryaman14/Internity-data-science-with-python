@@ -1,0 +1,182 @@
+# Day-9 Task
+
+1.Introduction to Pandas: Pandas is a Python library used for working with data sets.It has functions for analyzing, cleaning, exploring, and manipulating data.Pandas allows us to analyze big data and make conclusions based on statistical theories.Pandas can clean messy data sets, and make them readable and relevant.
+Using pandas:
+import pandas as pd
+2.Pandas Data Structures: Pandas deals with the following three data structures −
+Series
+DataFrame
+Panel
+
+Data Structure	  Dimensions	                Description
+Series	          1	1D                         labeled homogeneous array, sizeimmutable.
+Data Frames	      2	General 2D labeled         size-mutable tabular structure with potentially heterogeneously typed columns.
+Panel	            3	General 3D labeled         size-mutable array.
+
+3.Series: 
+Example:
+A)import pandas as pd
+
+a = [1, 7, 2]
+
+myvar = pd.Series(a)
+
+print(myvar)		#---	0    1
+1    7
+2    2
+dtype: int64
+B)Using Labels:
+import pandas as pd
+
+a = [1, 7, 2]
+
+myvar = pd.Series(a, index = ["x", "y", "z"])
+print(myvar["y"])		#---7
+
+C)Using Dict:
+import pandas as pd
+
+calories = {"day1": 420, "day2": 380, "day3": 390}
+
+myvar = pd.Series(calories, index = ["day1", "day2"])
+
+print(myvar)		#---	day1    420
+day2    380
+dtype: int64
+4.DataFrames:
+Examples:
+A)Using series:
+import pandas as pd
+
+data = {
+  "calories": [420, 380, 390],
+  "duration": [50, 40, 45]
+}
+
+myvar = pd.DataFrame(data)
+
+print(myvar)		#---calories  duration
+0       420        50
+1       380        40
+2       390        45
+B)Using Indexes on Dict:
+import pandas as pd
+data = {'Name':['Tom', 'Jack', 'Steve', 'Ricky'],'Age':[28,34,29,42]}
+df = pd.DataFrame(data, index=['rank1','rank2','rank3','rank4'])
+print df		#---    Age    Name
+		rank1    28      Tom
+		rank2    34     Jack
+		rank3    29    Steve
+		rank4    42    Ricky
+5.Panels: 
+Example:
+A)Using 3d ndarray:
+import pandas as pdimport numpy as np
+
+data = np.random.rand(2,4,5)
+p = pd.Panel(data)
+print p		#---	<class 'pandas.core.panel.Panel'>
+			Dimensions: 2 (items) x 4 (major_axis) x 5 (minor_axis)
+			Items axis: 0 to 1
+			Major_axis axis: 0 to 3
+			Minor_axis axis: 0 to 4
+B)Using Dict:
+import pandas as pdimport numpy as np
+
+data = {'Item1' : pd.DataFrame(np.random.randn(4, 3)), 
+   'Item2' : pd.DataFrame(np.random.randn(4, 2))}
+p = pd.Panel(data)
+print p		#---	Dimensions: 2 (items) x 4 (major_axis) x 3 (minor_axis)
+			Items axis: Item1 to Item2
+			Major_axis axis: 0 to 3
+			Minor_axis axis: 0 to 2
+6.Creating dataframe using csv:
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+
+print(df.to_string()) 
+
+7.From database:
+import pymysql 
+import pandas as pd 
+dbcon = pymysql.connect("localhost", "root", "root", "laravel7crud") 
+try: 
+SQL_Query = pd.read_sql_query( '''select symptoms, country_name, cases from coronas''', dbcon) 
+df = pd.DataFrame(SQL_Query, columns=['symptoms', 'country_name', 'cases'])
+ print(df) 
+print('The data type of df is: ', type(df)) 
+except: print("Error: unable to convert the data")
+ dbcon.close()
+
+
+8.From API:
+r = requests.get('http://api.football-data.org/v1/competitions/398/teams')
+x = r.json()
+df = pd.DataFrame(x['teams'])
+print df
+
+9.Examining data: 
+A) Viewing data:
+Example:
+(a)Using head()- Returns the headers and a specified number of rows, starting from the top. 
+Example:
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+
+print(df.head(10))
+
+(b)Using tail()- Returns the headers and a specified number of rows, starting from the bottom.
+Example:
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+
+print(df.tail()) 
+
+(c) Using info()- Gives you more information about the data set.
+Example:
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+
+print(df.info())
+
+
+10.Describing and summarizing:
+A)Remove empty cells using dropna():
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+
+df.dropna(inplace = True)
+
+print(df.to_string())	#---empty cells are removed at the original place
+
+B)Replacing empty cells by mean:
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+
+x = df["Calories"].mean()
+
+df["Calories"].fillna(x, inplace = True)   #---empty cells are replaced at the original place by mean
+
+C)Remove duplicates: 
+df.drop_duplicates(inplace = True)
+
+D)Finding correlation: The corr() method calculates the relationship between each column in your data set.
+df.corr()
+
+E)Plotting: 
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('data.csv')
+
+df.plot(kind = 'scatter', x = 'Duration', y = 'Maxpulse')
+
+plt.show()	  			
+
+
