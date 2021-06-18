@@ -1,0 +1,488 @@
+#Day-10 Task
+
+1.Accessing data from data structures: 
+A)Series: 
+Example:
+(a)Retrieve the first element
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+print s[0]		#---1
+
+(b) Retrieve the last three elements.
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+print s[-3:]	#---	c  3
+			              d  4
+			              e  5
+			              dtype: int64
+
+(c) Retrieve multiple elements using a list of index label values.
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+print s[['a','c','d']]	#---	a  1
+			                        c  3
+			                        d  4
+			                        dtype: int64
+
+
+B)Dataframes: 
+Example:
+(a)Column selection:
+import pandas as pd
+
+d = {'one' : pd.Series([1, 2, 3], index=['a', 'b', 'c']),
+   'two' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])}
+
+df = pd.DataFrame(d)
+print df ['one']	#---	a     1.0
+			b     2.0
+			c     3.0
+			d     NaN
+			Name: one, dtype: float64
+
+(b)Row selection:
+import pandas as pd
+
+d = {'one' : pd.Series([1, 2, 3], index=['a', 'b', 'c']),
+   'two' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])}
+
+df = pd.DataFrame(d)
+print df.iloc[2]	#---	one   3.0
+			                  two   3.0
+			                  Name: c, dtype: float64
+
+C)Panels:
+Example:
+(a)Using Items:
+import pandas as pdimport numpy as np
+data = {'Item1' : pd.DataFrame(np.random.randn(4, 3)), 
+   'Item2' : pd.DataFrame(np.random.randn(4, 2))}
+p = pd.Panel(data)
+print p['Item1']	#---    0          1          2
+		              0    0.488224  -0.128637   0.930817
+		              1    0.417497   0.896681   0.576657
+		              2   -2.775266   0.571668   0.290082
+		              3   -0.400538  -0.144234   1.110535
+
+(b)Using major axis:
+import pandas as pdimport numpy as np
+data = {'Item1' : pd.DataFrame(np.random.randn(4, 3)), 
+   'Item2' : pd.DataFrame(np.random.randn(4, 2))}
+p = pd.Panel(data)
+print p.major_xs(1)		#---Item1       Item2
+			              0   0.417497    0.748412
+			              1   0.896681   -0.557322
+			              2   0.576657       NaN
+
+(c)Using minor axis:
+import pandas as pdimport numpy as np
+data = {'Item1' : pd.DataFrame(np.random.randn(4, 3)), 
+   'Item2' : pd.DataFrame(np.random.randn(4, 2))}
+p = pd.Panel(data)
+
+print p.minor_xs(1)		#---Item1       Item2
+			              0   -0.128637   -1.047032
+			              1    0.896681   -0.557322
+			              2    0.571668    0.431953
+			              3   -0.144234    1.302466
+
+2.Reading and writing data: 
+A)axes: Returns the list of row axis labels and column axis labels.
+Example:
+import pandas as pdimport numpy as np
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+df = pd.DataFrame(d)
+print ("Row axis labels and column axis labels are:")
+print df.axes	#---[RangeIndex(start=0, stop=7, step=1), Index([u'Age', u'Name', u'Rating'],dtype='object')]
+
+B)dtypes: Returns the data type of each column.
+Example:
+import pandas as pdimport numpy as np
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+df = pd.DataFrame(d)
+print ("The data types of each column are:")
+print df.dtypes	#---	Age     int64
+			                Name    object
+			                Rating  float64
+			                dtype: object
+
+C)empty: Returns the Boolean value saying whether the Object is empty or not; True indicates that the object is empty.
+Example:
+import pandas as pdimport numpy as np
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+df = pd.DataFrame(d)
+print ("Is the object empty?")
+print df.empty	#---False
+
+D)shape: Returns a tuple representing the dimensionality of the DataFrame. Tuple (a,b), where a represents the number of rows and b represents the number of columns.
+Example:
+import pandas as pd
+import numpy as np
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+df = pd.DataFrame(d)print ("Our object is:")
+print dfprint ("The shape of the object is:")
+print df.shape	#---(7, 3)
+
+
+E)values: Returns the actual data in the DataFrame as an NDarray.
+Example:
+import pandas as pd
+import numpy as np
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+df = pd.DataFrame(d)
+print ("Our object is:")
+print dfprint ("The actual data in our data frame is:")
+print df.values	
+#---	[[25 'Tom' 4.23]
+			[26 'James' 3.24]
+			[25 'Ricky' 3.98]
+			[23 'Vin' 2.56]
+			[30 'Steve' 3.2]
+			[29 'Smith' 4.6]
+			[23 'Jack' 3.8]]
+
+3.Indexing and slicing dataframes:
+A).loc(): Pandas provide various methods to have purely label based indexing.
+Example:
+(a)
+import pandas as pdimport numpy as np
+
+df = pd.DataFrame(np.random.randn(8, 4),
+index = ['a','b','c','d','e','f','g','h'], columns = ['A', 'B', 'C', 'D'])
+print df.loc[:,['A','C']]	
+#---          A           C
+			a    0.391548    0.745623
+			b   -0.070649    1.620406
+			c   -0.317212    1.448365
+			d   -2.162406   -0.873557
+			e    2.202797    0.528067
+			f    0.613709    0.286414
+			g    1.050559    0.216526
+			h    1.122680   -1.621420
+
+
+(b)import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.randn(8, 4),
+index = ['a','b','c','d','e','f','g','h'], columns = ['A', 'B', 'C', 'D'])
+print df.loc['a':'h']		
+        #--- A           B          C          D
+			a    0.391548   -0.224297   0.745623   0.054301
+			b   -0.070649   -0.880130   1.620406   1.419743
+			c   -0.317212   -1.929698   1.448365   0.616899
+			d   -2.162406    0.614256  -0.873557   1.093958
+			e    2.202797   -2.315915   0.528067   0.612482
+			f    0.613709   -0.157674   0.286414  -0.500517
+			g    1.050559   -2.272099   0.216526   0.928449
+			h    1.122680    0.324368  -1.621420  -0.741470
+
+B)iloc(): Pandas provide various methods in order to get purely integer based indexing. Like python and numpy, these are 0-based indexing.
+Example:
+(a)import pandas as pdimport numpy as np
+
+df = pd.DataFrame(np.random.randn(8, 4), columns = ['A', 'B', 'C', 'D'])
+print df.iloc[1:5, 2:4]
+      #--   C          D
+			1  -0.813012   0.631615
+			2   0.025070   0.230806
+			3   0.826977  -0.026251
+			4   1.423332   1.130568
+
+
+(c)import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.randn(8, 4), columns = ['A', 'B', 'C', 'D'])
+print df.iloc[[1, 3, 5], [1, 3]]
+print df.iloc[1:3, :]
+ #---  B           D
+1   0.890791    0.631615
+3  -1.284314   -0.026251
+5  -0.512888   -0.518930
+
+           A           B           C           D
+1  -0.685354    0.890791   -0.813012    0.631615
+2  -0.783192   -0.531378    0.025070    0.230806
+
+C).ix()
+Besides pure label based and integer based, Pandas provides a hybrid method for selections and subsetting the object using the .ix() operator.
+Example:
+(a)import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.randn(8, 4), columns = ['A', 'B', 'C', 'D'])
+print df.ix[:4]
+      #---A          B           C           D
+		0   0.699435   0.256239   -1.270702   -0.645195
+		1  -0.685354   0.890791   -0.813012    0.631615
+		2  -0.783192  -0.531378    0.025070    0.230806
+		3   0.539042  -1.284314    0.826977   -0.026251
+
+(b)import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.randn(8, 4), columns = ['A', 'B', 'C', 'D'])# Index slicingprint df.ix[:,'A']	#---	0   0.699435
+				1  -0.685354
+				2  -0.783192
+				3   0.539042
+				4  -1.044209
+				5  -1.415411
+				6   1.062095
+				7   0.994204
+				Name: A, dtype: float64
+
+4.Data cleaning: 
+A)Remove empty cells using dropna():
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+
+df.dropna(inplace = True)
+
+print(df.to_string())	#---empty cells are removed at the original place
+
+B)FIlling empty cells:
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.randn(5, 3), index=['a', 'c', 'e', 'f','h'],columns=['one', 'two', 'three'])
+
+df = df.reindex(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'])
+print df.fillna(method='backfill')	#--- one        two      three
+				a   0.077988   0.476149   0.965836
+				b  -0.390208  -0.551605  -2.301950
+				c  -0.390208  -0.551605  -2.301950
+				d  -2.000303  -0.788201   1.510072
+				e  -2.000303  -0.788201   1.510072
+				f  -0.930230  -0.670473   1.146615
+				g   0.085100   0.532791   0.887415
+				h   0.085100   0.532791   0.887415
+
+
+B)Replacing empty cells by mean:
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+
+x = df["Calories"].mean()
+
+df["Calories"].fillna(x, inplace = True)   #---empty cells are replaced at the original place by mean
+
+C)Remove duplicates: 
+df.drop_duplicates(inplace = True)
+
+D)Finding correlation: The corr() method calculates the relationship between each column in your data set.
+df.corr()
+
+
+5.Data Aggregation:
+
+A)Aggregation on whole dataframe:
+import pandas as pdimport numpy as np
+
+df = pd.DataFrame(np.random.randn(10, 4),
+   index = pd.date_range('1/1/2000', periods=10),
+   columns = ['A', 'B', 'C', 'D'])
+print df
+r = df.rolling(window=3,min_periods=1)
+print r.aggregate(np.sum)
+#---		 A           B           C           D
+2000-01-01   1.088512   -0.650942   -2.547450   -0.566858
+2000-01-02   1.879182   -1.038796   -3.215581   -0.299575
+2000-01-03   1.303660   -2.003821   -3.155154   -2.479355
+2000-01-04   1.884801   -0.141119   -0.862400   -0.483331
+2000-01-05   1.194699    0.010551    0.297378   -1.216695
+2000-01-06   1.925393    1.968551   -0.968183    1.284044
+2000-01-07   0.565208    0.032738   -2.125934    0.482797
+2000-01-08   0.564129   -0.759118   -2.454374   -0.325454
+2000-01-09   2.048458   -1.820537   -0.535232   -1.212381
+2000-01-10   2.065750    0.383357    1.541496   -3.201469
+
+		 A           B           C           D
+2000-01-01   1.088512   -0.650942   -2.547450   -0.566858
+2000-01-02   1.879182   -1.038796   -3.215581   -0.299575
+2000-01-03   1.303660   -2.003821   -3.155154   -2.479355
+2000-01-04   1.884801   -0.141119   -0.862400   -0.483331
+2000-01-05   1.194699    0.010551    0.297378   -1.216695
+2000-01-06   1.925393    1.968551   -0.968183    1.284044
+2000-01-07   0.565208    0.032738   -2.125934    0.482797
+2000-01-08   0.564129   -0.759118   -2.454374   -0.325454
+2000-01-09   2.048458   -1.820537   -0.535232   -1.212381
+2000-01-10   2.065750    0.383357    1.541496   -3.201469
+
+B)Aggregation on single column:
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.randn(10, 4),
+   index = pd.date_range('1/1/2000', periods=10),
+   columns = ['A', 'B', 'C', 'D'])
+print df
+r = df.rolling(window=3,min_periods=1)
+print r['A'].aggregate([np.sum,np.mean])
+#---		 A           B           C           D
+2000-01-01   1.088512   -0.650942   -2.547450   -0.566858
+2000-01-02   1.879182   -1.038796   -3.215581   -0.299575
+2000-01-03   1.303660   -2.003821   -3.155154   -2.479355
+2000-01-04   1.884801   -0.141119   -0.862400   -0.483331
+2000-01-05   1.194699    0.010551    0.297378   -1.216695
+2000-01-06   1.925393    1.968551   -0.968183    1.284044
+2000-01-07   0.565208    0.032738   -2.125934    0.482797
+2000-01-08   0.564129   -0.759118   -2.454374   -0.325454
+2000-01-09   2.048458   -1.820537   -0.535232   -1.212381
+2000-01-10   2.065750    0.383357    1.541496   -3.201469
+                 	 sum       mean
+2000-01-01   1.088512   1.088512
+2000-01-02   1.879182   0.939591
+2000-01-03   1.303660   0.434553
+2000-01-04   1.884801   0.628267
+2000-01-05   1.194699   0.398233
+2000-01-06   1.925393   0.641798
+2000-01-07   0.565208   0.188403
+2000-01-08   0.564129   0.188043
+2000-01-09   2.048458   0.682819
+2000-01-10   2.065750   0.688583
+
+C)Apply multiple functions on multiple columns:
+import pandas as pdimport numpy as np
+
+df = pd.DataFrame(np.random.randn(10, 4),
+   index = pd.date_range('1/1/2000', periods=10),
+   columns = ['A', 'B', 'C', 'D'])
+print df
+r = df.rolling(window=3,min_periods=1)
+print r[['A','B']].aggregate([np.sum,np.mean])
+#---		A           B           C           D
+2000-01-01   1.088512   -0.650942   -2.547450   -0.566858
+2000-01-02   1.879182   -1.038796   -3.215581   -0.299575
+2000-01-03   1.303660   -2.003821   -3.155154   -2.479355
+2000-01-04   1.884801   -0.141119   -0.862400   -0.483331
+2000-01-05   1.194699    0.010551    0.297378   -1.216695
+2000-01-06   1.925393    1.968551   -0.968183    1.284044
+2000-01-07   0.565208    0.032738   -2.125934    0.482797
+2000-01-08   0.564129   -0.759118   -2.454374   -0.325454
+2000-01-09   2.048458   -1.820537   -0.535232   -1.212381
+2000-01-10   2.065750    0.383357    1.541496   -3.201469
+                    	A                      		B
+                  	sum       mean        	 sum        mean
+2000-01-01   1.088512   1.088512   -0.650942   -0.650942
+2000-01-02   1.879182   0.939591   -1.038796   -0.519398
+2000-01-03   1.303660   0.434553   -2.003821   -0.667940
+2000-01-04   1.884801   0.628267   -0.141119   -0.047040
+2000-01-05   1.194699   0.398233    0.010551    0.003517
+2000-01-06   1.925393   0.641798    1.968551    0.656184
+2000-01-07   0.565208   0.188403    0.032738    0.010913
+2000-01-08   0.564129   0.188043   -0.759118   -0.253039
+2000-01-09   2.048458   0.682819   -1.820537   -0.606846
+2000-01-10   2.065750   0.688583    0.383357    0.127786
+
+D)Different functions on different columns:
+import pandas as pdimport numpy as np
+ 
+df = pd.DataFrame(np.random.randn(3, 4),
+   index = pd.date_range('1/1/2000', periods=3),
+   columns = ['A', 'B', 'C', 'D'])print df
+r = df.rolling(window=3,min_periods=1)
+print r.aggregate({'A' : np.sum,'B' : np.mean})
+#---		A          	    B          	C         D
+2000-01-01  -1.575749  -1.018105   0.317797  0.545081
+2000-01-02  -0.164917  -1.361068   0.258240  1.113091
+2000-01-03   1.258111   1.037941  -0.047487  0.867371
+                    	A          	     B
+2000-01-01  -1.575749  -1.018105
+2000-01-02  -1.740666  -1.189587
+2000-01-03  -0.482555  -0.447078
+
+
+6.Data Merging:Pandas provides a single function, merge, as the entry point for all standard database join operations between DataFrame objects.
+
+Example:
+A)Merging on a key:
+import pandas as pd
+left = pd.DataFrame({
+   'id':[1,2,3,4,5],
+   'Name': ['Alex', 'Amy', 'Allen', 'Alice', 'Ayoung'],
+   'subject_id':['sub1','sub2','sub4','sub6','sub5']})
+right = pd.DataFrame({
+	'id':[1,2,3,4,5],
+   'Name': ['Billy', 'Brian', 'Bran', 'Bryce', 'Betty'],
+   'subject_id':['sub2','sub4','sub3','sub6','sub5']})
+print left
+print right
+print pd.merge(left,right,on='id')
+#--- Name  id   subject_id
+0   Alex   1         sub1
+1    Amy   2         sub2
+2  Allen   3         sub4
+3  Alice   4         sub6
+4  Ayoung  5         sub5
+
+    Name  id   subject_id
+0  Billy   1         sub2
+1  Brian   2         sub4
+2  Bran    3         sub3
+3  Bryce   4         sub6
+4  Betty   5         sub5
+
+Name_x   id  subject_id_x   Name_y   subject_id_y
+0  Alex      1          sub1    Billy           sub2
+1  Amy       2          sub2    Brian           sub4
+2  Allen     3          sub4     Bran           sub3
+3  Alice     4          sub6    Bryce           sub6
+4  Ayoung    5          sub5    Betty           sub5
+
+B)Merging on multiple keys:
+import pandas as pd
+left = pd.DataFrame({
+   'id':[1,2,3,4,5],
+   'Name': ['Alex', 'Amy', 'Allen', 'Alice', 'Ayoung'],
+   'subject_id':['sub1','sub2','sub4','sub6','sub5']})
+right = pd.DataFrame({
+	'id':[1,2,3,4,5],
+   'Name': ['Billy', 'Brian', 'Bran', 'Bryce', 'Betty'],
+   'subject_id':['sub2','sub4','sub3','sub6','sub5']})
+print pd.merge(left,right,on=['id','subject_id'])
+#---Name_x   id   subject_id   Name_y
+0    Alice    4         sub6    Bryce
+1   Ayoung    5         sub5    Betty
+
+We can also add how argument along with id to specify how to join:
+Types:
+Merge Method	        SQL Equivalent	            Description
+left	                LEFT OUTER JOIN	            Use keys from left object
+right	                RIGHT OUTER JOIN	          Use keys from right object
+outer	                FULL OUTER JOIN	            Use union of keys
+inner	                INNER JOIN	                Use intersection of keys
+
+Example:
+import pandas as pd
+left = pd.DataFrame({
+   'id':[1,2,3,4,5],
+   'Name': ['Alex', 'Amy', 'Allen', 'Alice', 'Ayoung'],
+   'subject_id':['sub1','sub2','sub4','sub6','sub5']})
+right = pd.DataFrame({
+   'id':[1,2,3,4,5],
+   'Name': ['Billy', 'Brian', 'Bran', 'Bryce', 'Betty'],
+   'subject_id':['sub2','sub4','sub3','sub6','sub5']})
+print pd.merge(left, right, on='subject_id', how='inner')
+#---Name_x   id_x   subject_id   Name_y   id_y
+0      Amy      2         sub2    Billy      1
+1    Allen      3         sub4    Brian      2
+2    Alice      4         sub6    Bryce      4
+3   Ayoung      5         sub5    Betty      5
+
+
+
+
+
